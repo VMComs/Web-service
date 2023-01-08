@@ -6,7 +6,7 @@ import ru.kata.spring.boot_security.demo.DTO.UserDTO;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 
-
+@Service
 public class Converter {
     private final ModelMapper modelMapper;
 
