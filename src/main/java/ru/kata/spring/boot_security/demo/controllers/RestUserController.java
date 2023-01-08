@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.DTO.RoleDTO;
 import ru.kata.spring.boot_security.demo.DTO.UserDTO;
 import ru.kata.spring.boot_security.demo.models.User;
+import ru.kata.spring.boot_security.demo.services.Converter;
 import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 
 import java.security.Principal;
@@ -19,15 +20,17 @@ import java.util.stream.Collectors;
 public class RestUserController {
 
     private final UserServiceImpl userServiceImpl;
+    private final Converter converter;
 
-    public RestUserController(UserServiceImpl userServiceImpl) {
+    public RestUserController(UserServiceImpl userServiceImpl, Converter converter) {
         this.userServiceImpl = userServiceImpl;
+        this.converter = converter;
     }
 
     @GetMapping("")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<UserDTO> allUsers =userServiceImpl.findAll()
-                .stream().map(userServiceImpl::userConvertToUserDTO)
+        List<UserDTO> allUsers = userServiceImpl.findAll()
+                .stream().map(converter::userConvertToUserDTO)
                 .collect(Collectors.toList());
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
@@ -37,7 +40,7 @@ public class RestUserController {
         if(userServiceImpl.getUserById(id)==null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            UserDTO userDTO = userServiceImpl.userConvertToUserDTO(userServiceImpl.getUserById(id));
+            UserDTO userDTO = converter.userConvertToUserDTO(userServiceImpl.getUserById(id));
             return new ResponseEntity<>(userDTO, HttpStatus.OK);
         }
     }
@@ -51,22 +54,22 @@ public class RestUserController {
     @GetMapping("/roles")
     public ResponseEntity<Set<RoleDTO>> getAllRoles() {
         return new ResponseEntity<>(userServiceImpl.getAllRoles()
-                .stream().map(userServiceImpl::roleConvertToRoleDTO)
+                .stream().map(converter::roleConvertToRoleDTO)
                 .collect(Collectors.toSet()), HttpStatus.OK);
     }
 
     @PostMapping("")
     public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
-        User newUser = userServiceImpl.userDTOConvertToUser(userDTO);
+        User newUser = converter.userDTOConvertToUser(userDTO);
         userServiceImpl.saveNewUser(newUser);
-        return new ResponseEntity<>(userServiceImpl.userConvertToUserDTO(newUser),HttpStatus.OK);
+        return new ResponseEntity<>(converter.userConvertToUserDTO(newUser),HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable("id") int id) {
-        User updatedUser = userServiceImpl.userDTOConvertToUser(userDTO);
+        User updatedUser = converter.userDTOConvertToUser(userDTO);
         userServiceImpl.updateUser(updatedUser, id);
-        return new ResponseEntity<>(userServiceImpl.userConvertToUserDTO(updatedUser), HttpStatus.OK);
+        return new ResponseEntity<>(converter.userConvertToUserDTO(updatedUser), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

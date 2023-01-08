@@ -17,6 +17,7 @@ import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -84,14 +85,14 @@ public class UserServiceImpl implements UserDetailsService {
 
 
 //Convertors
-    public User userDTOConvertToUser(UserDTO userDTO) {
-        return modelMapper.map(userDTO, User.class);
-    }
-    public UserDTO userConvertToUserDTO (User user) {
-        return modelMapper.map(user, UserDTO.class);
-    }
-    public RoleDTO roleConvertToRoleDTO(Role role) {
-        return modelMapper.map(role, RoleDTO.class);
-    }
+//    public User userDTOConvertToUser(UserDTO userDTO) {
+//        return modelMapper.map(userDTO, User.class);
+//    }
+//    public UserDTO userConvertToUserDTO (User user) {
+//        return modelMapper.map(user, UserDTO.class);
+//    }
+//    public RoleDTO roleConvertToRoleDTO(Role role) {
+//        return modelMapper.map(role, RoleDTO.class);
+//    }
 
 }
