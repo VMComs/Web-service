@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserDetailsService {
         if(userFound.isEmpty()){
             throw new UsernameNotFoundException(String.format("User '%s' not found!", username));
         }
-        return new org.springframework.security.core.userdetails.User(userFound.get().getName(), userFound.get().getPassword(), userFound.get().getAuthorities());
+        return userFound.get();
     }
 
     public User getUser(String username) {
