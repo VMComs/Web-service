@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -76,17 +75,4 @@ public class UserServiceImpl implements UserDetailsService {
     public List<Role> getAllRoles() {
         return new ArrayList<>(roleRepository.findAll());
     }
-
-
-//Convertors
-//    public User userDTOConvertToUser(UserDTO userDTO) {
-//        return modelMapper.map(userDTO, User.class);
-//    }
-//    public UserDTO userConvertToUserDTO (User user) {
-//        return modelMapper.map(user, UserDTO.class);
-//    }
-//    public RoleDTO roleConvertToRoleDTO(Role role) {
-//        return modelMapper.map(role, RoleDTO.class);
-//    }
-
 }
