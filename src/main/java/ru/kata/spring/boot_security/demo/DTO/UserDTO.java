@@ -1,6 +1,6 @@
 package ru.kata.spring.boot_security.demo.DTO;
 
-import ru.kata.spring.boot_security.demo.models.Role;
+import ru.kata.spring.boot_security.demo.model.Role;
 
 import java.util.Set;
 

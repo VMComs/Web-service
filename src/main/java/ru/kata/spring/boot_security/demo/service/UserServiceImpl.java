@@ -1,5 +1,4 @@
-package ru.kata.spring.boot_security.demo.services;
-
+package ru.kata.spring.boot_security.demo.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +8,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.DTO.RoleDTO;
-import ru.kata.spring.boot_security.demo.DTO.UserDTO;
-import ru.kata.spring.boot_security.demo.models.Role;
-import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
-import ru.kata.spring.boot_security.demo.repositories.UserRepository;
+import ru.kata.spring.boot_security.demo.model.Role;
+import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repositoriy.RoleRepository;
+import ru.kata.spring.boot_security.demo.repositoriy.UserRepository;
 
 import java.util.*;
-import java.util.stream.Collectors;
-
 
 @Service
 @Transactional(readOnly = true)
@@ -29,7 +24,6 @@ public class UserServiceImpl implements UserDetailsService {
     private final RoleRepository roleRepository;
     private final ModelMapper modelMapper;
 
-    @Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -69,7 +63,7 @@ public class UserServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> userFound = userRepository.findUserByName(username);
-        if(userFound.isEmpty()){
+        if (userFound.isEmpty()) {
             throw new UsernameNotFoundException(String.format("User '%s' not found!", username));
         }
         return userFound.get();
