@@ -11,9 +11,9 @@ import ru.kata.spring.boot_security.demo.service.Converter;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -51,9 +51,9 @@ public class RestUserController {
 
 
     @GetMapping("/roles")
-    public ResponseEntity<Set<RoleDTO>> getAllRoles() {
-        Set<Role> allRoles = userServiceImpl.getAllRoles();
-        return new ResponseEntity<>(Converter.convertToSet(allRoles, converter::roleConvertToRoleDTO), HttpStatus.OK);
+    public ResponseEntity<List<RoleDTO>> getAllRoles() {
+        List<Role> allRoles = userServiceImpl.getAllRoles();
+        return new ResponseEntity<>(Converter.convertToList(allRoles, converter::roleConvertToRoleDTO), HttpStatus.OK);
     }
 
     @PostMapping("")

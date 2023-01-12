@@ -73,8 +73,8 @@ public class UserServiceImpl implements UserDetailsService {
         return userRepository.findUserByName(username).get();
     }
 
-    public Set<Role> getAllRoles() {
-        return new HashSet<>(roleRepository.findAll());
+    public List<Role> getAllRoles() {
+        return new ArrayList<>(roleRepository.findAll());
     }
 
 

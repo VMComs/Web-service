@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 @Service
 public class Converter {
     private final ModelMapper modelMapper;
-//    private final UserServiceImpl userServiceImpl;
 
     public Converter(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
@@ -45,7 +44,7 @@ public class Converter {
         return list.stream().map(e -> converter.apply(e)).collect(Collectors.toList());
     }
 
-    public static <R, E> Set<R> convertToSet(Set<E> list, Function<E, R> converter) {
-        return list.stream().map(e -> converter.apply(e)).collect(Collectors.toSet());
-    }
+//    public static <R, E> Set<R> convertToSet(Set<E> list, Function<E, R> converter) {
+//        return list.stream().map(e -> converter.apply(e)).collect(Collectors.toSet());
+//    }
 }
