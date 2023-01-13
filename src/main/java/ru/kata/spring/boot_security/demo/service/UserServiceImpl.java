@@ -1,17 +1,15 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repositoriy.RoleRepository;
-import ru.kata.spring.boot_security.demo.repositoriy.UserRepository;
+import ru.kata.spring.boot_security.demo.repository.RoleRepository;
+import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.*;
 
@@ -21,12 +19,13 @@ public class UserServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final ModelMapper modelMapper;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, ModelMapper modelMapper) {
+    private final BCryptPasswordEncoder passEncoder;
+
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.modelMapper = modelMapper;
+        this.passEncoder = passEncoder;
     }
 
 
@@ -42,11 +41,16 @@ public class UserServiceImpl implements UserDetailsService {
 
     @Transactional
     public void saveNewUser(User user) {
+        user.setPassword(passEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
     @Transactional
     public void updateUser(User user, int id) {
+        User oldUser = userRepository.getById(id);
+        if (!user.getPassword().equals(oldUser.getPassword())) {
+            user.setPassword(passEncoder.encode(user.getPassword()));
+        }
     user.setId(id);
     userRepository.save(user);
     }
