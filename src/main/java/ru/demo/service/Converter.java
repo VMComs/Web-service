@@ -1,11 +1,11 @@
-package ru.kata.spring.boot_security.demo.service;
+package ru.demo.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import ru.kata.spring.boot_security.demo.DTO.RoleDTO;
-import ru.kata.spring.boot_security.demo.DTO.UserDTO;
-import ru.kata.spring.boot_security.demo.model.Role;
-import ru.kata.spring.boot_security.demo.model.User;
+import ru.demo.DTO.RoleDTO;
+import ru.demo.DTO.UserDTO;
+import ru.demo.model.Role;
+import ru.demo.model.User;
 
 import java.util.List;
 import java.util.function.Function;
